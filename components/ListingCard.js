@@ -1,8 +1,9 @@
-import { Card, Link } from '@mui/material';
+import Card, { Button, Link } from '@mui/material';
 import React from 'react';
+import PropTypes from 'prop-types';
 import { deleteListing } from '../api/listingData';
 
-function listingObjCard({ listingObj, onUpdate }) {
+function ListingCard({ listingObj, onUpdate }) {
   const deleteThisListing = () => {
     if (window.confirm('Are you sure you want to delete this listing?')) {
       deleteListing(listingObj.firebaseKey).then(onUpdate);
@@ -15,11 +16,24 @@ function listingObjCard({ listingObj, onUpdate }) {
         <Card.Title>{listingObj.title}</Card.Title>
         <Card.Text>{listingObj.description}</Card.Text>
         <Card.Text>{listingObj.mediaType}</Card.Text>
-        <button variant='info' href={`/listing/edit/${listingObj.firebaseKey}`} passHref>Edit</button>
-        <button variant="danger" onClick={deleteThisListing}>Delete</button>
+        <Link href={`listing/edit/${listingObj.firebaseKey}`}>
+          <Button type="button" href={`/listing/edit/${listingObj.firebaseKey}`}>Edit</Button>
+        </Link>
+        <Button type="button" onClick={deleteThisListing}>Delete</Button>
       </Card.Body>
     </Card>
   );
 }
 
-export default listingObjCard;
+ListingCard.propTypes = {
+  listingObj: PropTypes.shape({
+    firebaseKey: PropTypes.string,
+    title: PropTypes.string,
+    description: PropTypes.string,
+    mediaType: PropTypes.string,
+    photoUrl: PropTypes.string,
+  }).isRequired,
+  onUpdate: PropTypes.func.isRequired,
+};
+
+export default ListingCard;
