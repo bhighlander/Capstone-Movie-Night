@@ -1,0 +1,11 @@
+{
+  "listings": {
+  "test" : {
+    "photoUrl" : "http://www.google.com",
+    "title" : "test",
+    "description" : "test",
+    "mediaType" : "show",
+    "uid" : "UOCX9gXZ1xV5uqB2O30l4Dix40D2"
+  }
+}
+}
