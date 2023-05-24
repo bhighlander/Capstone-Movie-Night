@@ -20,35 +20,26 @@ const getListings = (uid) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
-const createListing = (payload) => new Promise((resolve, reject) => {
+const createListing = (listingObj) => new Promise((resolve, reject) => {
   fetch(`${baseUrl}/listings.json`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(payload),
+    body: JSON.stringify(listingObj),
   })
     .then((response) => response.json())
-    .then((data) => {
-      const setcode = { firebaseKey: data.name };
-      fetch(`${baseUrl}/listings/${setcode.firebaseKey}.json`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(setcode),
-      }).then(resolve);
-    })
+    .then((data) => resolve(data))
     .catch(reject);
 });
 
-const updateListing = (listingObj) => new Promise((resolve, reject) => {
-  fetch(`${baseUrl}/listings/${listingObj.firebaseKey}.json`, {
+const updateListing = (payload) => new Promise((resolve, reject) => {
+  fetch(`${baseUrl}/listings/${payload.firebaseKey}.json`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(listingObj),
+    body: JSON.stringify(payload),
   })
     .then((response) => response.json())
     .then(resolve)

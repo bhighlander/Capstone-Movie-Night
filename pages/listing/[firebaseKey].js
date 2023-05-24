@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import PropTypes from 'prop-types';
-import ListingCard from '../../components/ListingCard';
 import { getSingleListing } from '../../api/listingData';
 
 function ViewListing() {
@@ -14,26 +12,14 @@ function ViewListing() {
   }, [firebaseKey]);
 
   return (
-    <div>
-      <div>
-        <h1>{listingDetails.title}</h1>
+    <div className="mt-5 d-flex flex-wrap">
+      <div className="d-flex flex-column text-white ms-5 details">
+        <img src={listingDetails.posterUrl} alt={listingDetails.title} width="300px" />
+        <h5>{listingDetails.title}</h5>
+        Description: {listingDetails.description}
       </div>
-      {listingDetails.books?.map((listing) => (
-        <ListingCard key={listing.firebaseKey} listingObj={listing} onUpdate={getSingleListing} />
-      ))}
     </div>
   );
 }
-
-ListingCard.propTypes = {
-  listingObj: PropTypes.shape({
-    firebaseKey: PropTypes.string,
-    title: PropTypes.string,
-    description: PropTypes.string,
-    mediaType: PropTypes.string,
-    photoUrl: PropTypes.string,
-  }).isRequired,
-  onUpdate: PropTypes.func.isRequired,
-};
 
 export default ViewListing;

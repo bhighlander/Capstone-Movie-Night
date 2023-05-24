@@ -1,21 +1,27 @@
-import { Button } from 'react-bootstrap';
-import { signOut } from '../utils/auth';
+import { useEffect, useState } from 'react';
 import { useAuth } from '../utils/context/authContext';
+import { getListings } from '../api/listingData';
+import ListingCard from '../components/ListingCard';
 
 function Home() {
+  const [listings, setListings] = useState([]);
   const { user } = useAuth();
+
+  const getAllListings = () => {
+    getListings(user.uid).then(setListings);
+  };
+
+  useEffect(() => {
+    getAllListings();
+  }, []);
+
   return (
-    <div
-      className="text-center d-flex flex-column justify-content-center align-content-center"
-      style={{
-        height: '90vh',
-        padding: '30px',
-        maxWidth: '400px',
-        margin: '0 auto',
-      }}
-    >
-      <h1>Hello {user.displayName}! </h1>
-      <Button onClick={signOut}>Sign Out</Button>
+    <div className="text-center m-4">
+      <div className="d-flex flex-wrap">
+        {listings.map((listing) => (
+          <ListingCard key={listing.firebaseKey} listingObj={listing} onUpdate={getAllListings} />
+        ))}
+      </div>
     </div>
   );
 }

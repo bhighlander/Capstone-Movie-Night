@@ -1,7 +1,7 @@
 {
   "listings": {
   "test" : {
-    "photoUrl" : "http://www.google.com",
+    "posterUrl" : "http://www.google.com",
     "title" : "test",
     "description" : "test",
     "mediaType" : "show",
