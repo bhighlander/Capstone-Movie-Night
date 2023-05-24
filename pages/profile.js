@@ -1,9 +1,33 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
+import User from '../components/User';
+import { getListings } from '../api/listingData';
+import ListingCard from '../components/ListingCard';
+import { useAuth } from '../utils/context/authContext';
 
-function profile() {
+function Profile() {
+  const [listings, setListings] = useState([]);
+  const { user } = useAuth();
+
+  const getAllListings = () => {
+    getListings(user.uid).then(setListings);
+  };
+
+  useEffect(() => {
+    getAllListings();
+  }, []);
+
   return (
-    <div>profile</div>
+    <>
+      <User userObject={user} />
+      <div className="text-center m-4">
+        <div className="d-flex flex-wrap">
+          {listings.map((listing) => (
+            <ListingCard key={listing.firebaseKey} listingObj={listing} onUpdate={getAllListings} />
+          ))}
+        </div>
+      </div>
+    </>
   );
 }
 
-export default profile;
+export default Profile;

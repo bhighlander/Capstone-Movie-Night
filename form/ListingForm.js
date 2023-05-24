@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import {
-// FormControl, FormControlLabel, FormLabel, Radio, TextField, RadioGroup,
+  FormControl, FormControlLabel, FormLabel, Radio, TextField, RadioGroup,
 } from '@mui/material';
 import PropTypes from 'prop-types';
-import { Button, FloatingLabel, Form } from 'react-bootstrap';
+// import { Button, FloatingLabel, Form } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import { useAuth } from '../utils/context/authContext';
 import { createListing, getListings, updateListing } from '../api/listingData';
 
@@ -51,11 +52,12 @@ function ListingForm({ obj = initialState }) {
 
   return (
     <>
-      {/* <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit}>
         <h2 className="form-title">{obj.firebaseKey ? 'Update' : 'Create'} Listing</h2>
         <FormControl>
           <TextField
-            class="outlined-basic"
+            id="outlined-basic"
+            name="posterUrl"
             value={formInput.posterUrl}
             label="Poster"
             variant="outlined"
@@ -65,7 +67,8 @@ function ListingForm({ obj = initialState }) {
         </FormControl>
         <FormControl>
           <TextField
-            class="outlined-basic"
+            id="outlined-basic"
+            name="title"
             value={formInput.title}
             label="Title"
             variant="outlined"
@@ -75,7 +78,8 @@ function ListingForm({ obj = initialState }) {
         </FormControl>
         <FormControl>
           <TextField
-            class="outlined-basic"
+            id="outlined-basic"
+            name="description"
             value={formInput.description}
             label="Description"
             variant="outlined"
@@ -89,7 +93,7 @@ function ListingForm({ obj = initialState }) {
           <RadioGroup
             aria-labelledby="mediaType"
             defaultValue="show"
-            name="radio-buttons-group"
+            name="mediaType"
             row
             value={formInput.mediaType}
             onChange={handleInputChange}
@@ -108,8 +112,8 @@ function ListingForm({ obj = initialState }) {
           </RadioGroup>
         </FormControl>
         <button type="submit">Submit</button>
-      </Form> */}
-      <Form onSubmit={handleSubmit}>
+      </Form>
+      {/* <Form onSubmit={handleSubmit}>
         <h2 className="text-white mt-5">{obj.firebaseKey ? 'Update' : 'Create'} Listing</h2>
 
         <FloatingLabel controlId="floatingInput1" label="poster Url" className="mb-3">
@@ -145,7 +149,7 @@ function ListingForm({ obj = initialState }) {
           />
         </FloatingLabel>
         <Button type="submit">{obj.firebaseKey ? 'Update' : 'Create'}</Button>
-      </Form>
+      </Form> */}
     </>
   );
 }
