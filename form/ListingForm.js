@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import {
-  FormControl, FormControlLabel, FormLabel, Radio, TextField, RadioGroup,
+// FormControl, FormControlLabel, FormLabel, Radio, TextField, RadioGroup,
 } from '@mui/material';
 import PropTypes from 'prop-types';
-import { Form } from 'react-bootstrap';
+import { Button, FloatingLabel, Form } from 'react-bootstrap';
 import { useAuth } from '../utils/context/authContext';
 import { createListing, getListings, updateListing } from '../api/listingData';
 
@@ -50,64 +50,103 @@ function ListingForm({ obj = initialState }) {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <h2 className="form-title">{obj.firebaseKey ? 'Update' : 'Create'} Listing</h2>
-      <FormControl>
-        <TextField
-          id="outlined-basic"
-          value={formInput.posterUrl}
-          label="Poster"
-          variant="outlined"
-          onChange={handleInputChange}
-          required
-        />
-      </FormControl>
-      <FormControl>
-        <TextField
-          id="outlined-basic"
-          value={formInput.title}
-          label="Title"
-          variant="outlined"
-          onChange={handleInputChange}
-          required
-        />
-      </FormControl>
-      <FormControl>
-        <TextField
-          id="outlined-basic"
-          value={formInput.description}
-          label="Description"
-          variant="outlined"
-          onChange={handleInputChange}
-          required
-        />
+    <>
+      {/* <Form onSubmit={handleSubmit}>
+        <h2 className="form-title">{obj.firebaseKey ? 'Update' : 'Create'} Listing</h2>
+        <FormControl>
+          <TextField
+            class="outlined-basic"
+            value={formInput.posterUrl}
+            label="Poster"
+            variant="outlined"
+            onChange={handleInputChange}
+            required
+          />
+        </FormControl>
+        <FormControl>
+          <TextField
+            class="outlined-basic"
+            value={formInput.title}
+            label="Title"
+            variant="outlined"
+            onChange={handleInputChange}
+            required
+          />
+        </FormControl>
+        <FormControl>
+          <TextField
+            class="outlined-basic"
+            value={formInput.description}
+            label="Description"
+            variant="outlined"
+            onChange={handleInputChange}
+            required
+          />
 
-      </FormControl>
-      <FormControl>
-        <FormLabel id="mediaType">Type</FormLabel>
-        <RadioGroup
-          aria-labelledby="mediaType"
-          defaultValue="show"
-          name="radio-buttons-group"
-          row
-          value={formInput.mediaType}
-          onChange={handleInputChange}
-          required
-        >
-          <FormControlLabel
-            value="show"
-            control={<Radio />}
-            label="TV Show"
+        </FormControl>
+        <FormControl>
+          <FormLabel id="mediaType">Type</FormLabel>
+          <RadioGroup
+            aria-labelledby="mediaType"
+            defaultValue="show"
+            name="radio-buttons-group"
+            row
+            value={formInput.mediaType}
+            onChange={handleInputChange}
+            required
+          >
+            <FormControlLabel
+              value="show"
+              control={<Radio />}
+              label="TV Show"
+            />
+            <FormControlLabel
+              value="movie"
+              control={<Radio />}
+              label="Movie"
+            />
+          </RadioGroup>
+        </FormControl>
+        <button type="submit">Submit</button>
+      </Form> */}
+      <Form onSubmit={handleSubmit}>
+        <h2 className="text-white mt-5">{obj.firebaseKey ? 'Update' : 'Create'} Listing</h2>
+
+        <FloatingLabel controlId="floatingInput1" label="poster Url" className="mb-3">
+          <Form.Control
+            type="text"
+            placeholder="Enter poster Url"
+            name="posterUrl"
+            value={formInput.posterUrl}
+            onChange={handleInputChange}
+            required
           />
-          <FormControlLabel
-            value="movie"
-            control={<Radio />}
-            label="Movie"
+        </FloatingLabel>
+
+        <FloatingLabel controlId="floatingInput2" label="Title" className="mb-3">
+          <Form.Control
+            type="text"
+            placeholder="Enter Title"
+            name="title"
+            value={formInput.title}
+            onChange={handleInputChange}
+            required
           />
-        </RadioGroup>
-      </FormControl>
-      <button type="submit">Submit</button>
-    </Form>
+        </FloatingLabel>
+
+        <FloatingLabel controlId="floatingInput3" label="Description" className="mb-3">
+          <Form.Control
+            type="text"
+            placeholder="Enter Description"
+            name="description"
+            value={formInput.description}
+            onChange={handleInputChange}
+            required
+          />
+        </FloatingLabel>
+        <Button type="submit">{obj.firebaseKey ? 'Update' : 'Create'}</Button>
+      </Form>
+    </>
   );
 }
 
