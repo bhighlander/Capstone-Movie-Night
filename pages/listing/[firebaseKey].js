@@ -5,7 +5,7 @@ import {
 } from '@mui/material';
 import { viewListingDetails } from '../../api/mergedData';
 import CommentForm from '../../form/CommentForm';
-import ViewComment from '../comment/[firebaseKey]';
+import CommentField from '../../components/CommentField';
 
 function ViewListing() {
   const [listingDetails, setListingDetails] = useState({});
@@ -15,8 +15,6 @@ function ViewListing() {
   useEffect(() => {
     viewListingDetails(firebaseKey).then(setListingDetails);
   }, [firebaseKey]);
-
-  console.log(listingDetails);
 
   return (
     <div className="mt-5 d-flex flex-wrap">
@@ -29,7 +27,7 @@ function ViewListing() {
 
           <div className="d-flex flex-column">
             {listingDetails.comments?.map((comment) => (
-              <ViewComment key={comment.firebaseKey} commentObj={comment} />
+              <CommentField key={comment.firebaseKey} commentObj={comment} />
             ))}
           </div>
           <CommentForm obj={{}} listingFirebaseKey={firebaseKey} onUpdate={viewListingDetails} />

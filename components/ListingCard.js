@@ -10,7 +10,7 @@ import {
 import { deleteListing } from '../api/listingData';
 
 function ListingCard({ listingObj, onUpdate }) {
-  const deleteThisListing = () => {
+  const handleDelete = () => {
     if (window.confirm('Are you sure you want to delete this listing?')) {
       deleteListing(listingObj.firebaseKey).then(() => onUpdate());
     }
@@ -31,7 +31,7 @@ function ListingCard({ listingObj, onUpdate }) {
         <Link href={`listing/edit/${listingObj.firebaseKey}`}>
           <Button type="button" href={`/listing/edit/${listingObj.firebaseKey}`}>Edit</Button>
         </Link>
-        <Button type="button" onClick={deleteThisListing}>Delete</Button>
+        <Button type="button" onClick={handleDelete}>Delete</Button>
       </CardActions>
     </Card>
   );
