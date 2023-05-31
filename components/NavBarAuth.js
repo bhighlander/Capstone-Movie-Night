@@ -1,34 +1,28 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import Link from 'next/link';
+import { BottomNavigation, BottomNavigationAction } from '@mui/material';
 import {
-  Navbar, Container, Nav, Button,
-} from 'react-bootstrap';
+  Home, Person, AddCircle, ExitToApp,
+} from '@mui/icons-material';
 import { signOut } from '../utils/auth';
 
 export default function NavBarAuth() {
+  const handleSignOut = () => {
+    signOut();
+  };
+
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-      <Container>
-        <Link passHref href="/">
-          <Navbar.Brand>CHANGE ME</Navbar.Brand>
-        </Link>
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto">
-            <Link passHref href="/">
-              <Nav.Link>Home</Nav.Link>
-            </Link>
-            <Link passHref href="/profile">
-              <Nav.Link>Profile</Nav.Link>
-            </Link>
-            <Link passHref href="/listing/new">
-              <Nav.Link>New Listing</Nav.Link>
-            </Link>
-            <Button variant="danger" onClick={signOut}>Sign Out</Button>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
+    <BottomNavigation showLabels>
+      <Link passHref href="/">
+        <BottomNavigationAction label="Home" icon={<Home />} />
+      </Link>
+      <Link passHref href="/profile">
+        <BottomNavigationAction label="Profile" icon={<Person />} />
+      </Link>
+      <Link passHref href="/listing/new">
+        <BottomNavigationAction label="New Listing" icon={<AddCircle />} />
+      </Link>
+      <BottomNavigationAction label="Sign Out" icon={<ExitToApp />} onClick={handleSignOut} />
+    </BottomNavigation>
   );
 }

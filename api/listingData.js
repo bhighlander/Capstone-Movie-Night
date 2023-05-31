@@ -70,6 +70,29 @@ const getSingleListing = (firebaseKey) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const getListingComments = (listingFirebaseKey) => new Promise((resolve, reject) => {
+  fetch(`${baseUrl}/comments.json?orderBy="listingId"&equalTo="${listingFirebaseKey}"`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => resolve(Object.values(data)))
+    .catch(reject);
+});
+
+const deleteSingleListing = (firebaseKey) => new Promise((resolve, reject) => {
+  fetch(`${baseUrl}/listings/${firebaseKey}.json`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(resolve)
+    .catch(reject);
+});
+
 export {
-  getListings, createListing, updateListing, deleteListing, getSingleListing,
+  getListings, createListing, updateListing, deleteListing, getSingleListing, getListingComments, deleteSingleListing,
 };
