@@ -46,18 +46,6 @@ const updateListing = (payload) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const deleteListing = (firebaseKey) => new Promise((resolve, reject) => {
-  fetch(`${baseUrl}/listings/${firebaseKey}.json`, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-    .then((response) => response.json())
-    .then(resolve)
-    .catch(reject);
-});
-
 const getSingleListing = (firebaseKey) => new Promise((resolve, reject) => {
   fetch(`${baseUrl}/listings/${firebaseKey}.json`, {
     method: 'GET',
@@ -89,10 +77,11 @@ const deleteSingleListing = (firebaseKey) => new Promise((resolve, reject) => {
       'Content-Type': 'application/json',
     },
   })
+    .then((response) => response.json())
     .then(resolve)
     .catch(reject);
 });
 
 export {
-  getListings, createListing, updateListing, deleteListing, getSingleListing, getListingComments, deleteSingleListing,
+  getListings, createListing, updateListing, getSingleListing, getListingComments, deleteSingleListing,
 };

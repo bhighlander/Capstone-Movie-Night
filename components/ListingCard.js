@@ -7,15 +7,8 @@ import {
   Card,
   CardActions, CardContent, CardMedia, Link, Typography,
 } from '@mui/material';
-import { deleteListing } from '../api/listingData';
 
-function ListingCard({ listingObj, onUpdate }) {
-  const handleDelete = () => {
-    if (window.confirm('Are you sure you want to delete this listing?')) {
-      deleteListing(listingObj.firebaseKey).then(() => onUpdate());
-    }
-  };
-
+function ListingCard({ listingObj }) {
   return (
     <Card style={{ width: '18rem', margin: '10px' }}>
       <CardMedia sx={{ height: '400px' }} image={listingObj.posterUrl} />
@@ -31,7 +24,6 @@ function ListingCard({ listingObj, onUpdate }) {
         <Link href={`listing/edit/${listingObj.firebaseKey}`}>
           <Button type="button" href={`/listing/edit/${listingObj.firebaseKey}`}>Edit</Button>
         </Link>
-        <Button type="button" onClick={handleDelete}>Delete</Button>
       </CardActions>
     </Card>
   );
@@ -45,7 +37,6 @@ ListingCard.propTypes = {
     mediaType: PropTypes.string,
     posterUrl: PropTypes.string,
   }).isRequired,
-  onUpdate: PropTypes.func.isRequired,
 };
 
 export default ListingCard;

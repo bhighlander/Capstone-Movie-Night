@@ -1,5 +1,4 @@
 import { Button, FormControl, TextField } from '@mui/material';
-import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
@@ -7,14 +6,16 @@ import { useAuth } from '../utils/context/authContext';
 import { createComment, updateComment } from '../api/commentsData';
 
 function CommentForm({ obj, listingFirebaseKey }) {
+  const [newComment, setNewComment] = useState('');
+  const { user } = useAuth();
+  const currentDate = new Date().toISOString();
   const [formInput, setFormInput] = useState({
     commentText: '',
-    uid: '',
+    uid: user.uid,
     listingId: listingFirebaseKey,
+    date: currentDate,
+    firebaseKey: obj.firebaseKey,
   });
-  const [newComment, setNewComment] = useState('');
-  const router = useRouter();
-  const { user } = useAuth();
 
   const handleCommentChange = (e) => {
     const { name, value } = e.target;
@@ -28,14 +29,14 @@ function CommentForm({ obj, listingFirebaseKey }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (obj.firebaseKey) {
-      updateComment(formInput)
-        .then(() => router.push(`/listing/${listingFirebaseKey}`));
+      updateComment({ ...formInput })
+        .then(() => setNewComment(''));
     } else {
-      const payload = { ...formInput, uid: user.uid };
+      const payload = { ...formInput };
       createComment(payload).then(({ name }) => {
         const patchPayload = { firebaseKey: name };
         updateComment(patchPayload).then(() => {
-          router.push(`/listing/${listingFirebaseKey}`);
+          setNewComment('');
         });
       });
     }
