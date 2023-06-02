@@ -100,12 +100,12 @@ function ListingForm({ obj = initialState }) {
             required
           >
             <FormControlLabel
-              value="show"
+              value="Show"
               control={<Radio />}
               label="TV Show"
             />
             <FormControlLabel
-              value="movie"
+              value="Movie"
               control={<Radio />}
               label="Movie"
             />
@@ -113,43 +113,6 @@ function ListingForm({ obj = initialState }) {
         </FormControl>
         <button type="submit">Submit</button>
       </Form>
-      {/* <Form onSubmit={handleSubmit}>
-        <h2 className="text-white mt-5">{obj.firebaseKey ? 'Update' : 'Create'} Listing</h2>
-
-        <FloatingLabel controlId="floatingInput1" label="poster Url" className="mb-3">
-          <Form.Control
-            type="text"
-            placeholder="Enter poster Url"
-            name="posterUrl"
-            value={formInput.posterUrl}
-            onChange={handleInputChange}
-            required
-          />
-        </FloatingLabel>
-
-        <FloatingLabel controlId="floatingInput2" label="Title" className="mb-3">
-          <Form.Control
-            type="text"
-            placeholder="Enter Title"
-            name="title"
-            value={formInput.title}
-            onChange={handleInputChange}
-            required
-          />
-        </FloatingLabel>
-
-        <FloatingLabel controlId="floatingInput3" label="Description" className="mb-3">
-          <Form.Control
-            type="text"
-            placeholder="Enter Description"
-            name="description"
-            value={formInput.description}
-            onChange={handleInputChange}
-            required
-          />
-        </FloatingLabel>
-        <Button type="submit">{obj.firebaseKey ? 'Update' : 'Create'}</Button>
-      </Form> */}
     </>
   );
 }

@@ -1,39 +1,63 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Card, CardContent, Typography, Button,
 } from '@mui/material';
+import CommentForm from '../form/CommentForm';
+import { deleteComment } from '../api/commentsData';
 
-function CommentField({ commentObj }) {
+function CommentField({ commentObj, onUpdate }) {
+  const [isEditing, setIsEditing] = useState(false);
+
   const handleEdit = () => {
-    // Add code to handle edit button click
+    setIsEditing(true);
   };
 
   const handleDelete = () => {
-    // Add code to handle delete button click
+    if (window.confirm('Are you sure you want to delete this comment?')) {
+      deleteComment(commentObj.firebaseKey).then(() => onUpdate());
+    }
+  };
+
+  const handleCancel = () => {
+    setIsEditing(false);
   };
 
   return (
-    <Card className="mt-3">
-      <CardContent>
-        <Typography variant="body1" component="p">
-          {commentObj.commentText || 'Blue'}
-        </Typography>
-        <Button variant="contained" color="primary" onClick={handleEdit}>
-          Edit
-        </Button>
-        <Button variant="contained" color="secondary" onClick={handleDelete}>
-          Delete
-        </Button>
-      </CardContent>
-    </Card>
+    <>
+      {isEditing ? (
+        <CommentForm
+          obj={commentObj}
+          onUpdate={onUpdate}
+          onCancel={handleCancel}
+        />
+      ) : (
+        <Card className="mt-3">
+          <CardContent>
+            <Typography variant="body1" component="p">
+              {commentObj.commentText || 'Blue'}
+            </Typography>
+            <Button variant="contained" color="primary" onClick={handleEdit}>
+              Edit
+            </Button>
+            <Button variant="contained" color="secondary" onClick={handleDelete}>
+              Delete
+            </Button>
+          </CardContent>
+        </Card>
+      )}
+    </>
   );
 }
 
 CommentField.propTypes = {
   commentObj: PropTypes.shape({
     commentText: PropTypes.string,
+    firebaseKey: PropTypes.string,
   }).isRequired,
+  onUpdate: PropTypes.func,
 };
+
+CommentField.defaultProps = { onUpdate: () => {} };
 
 export default CommentField;
