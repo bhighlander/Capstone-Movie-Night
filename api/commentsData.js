@@ -2,8 +2,8 @@ import { clientCredentials } from '../utils/client';
 
 const baseUrl = clientCredentials.databaseURL;
 
-const getComments = (uid) => new Promise((resolve, reject) => {
-  fetch(`${baseUrl}/comments.json?orderBy="uid"&equalTo="${uid}"`, {
+const getComments = () => new Promise((resolve, reject) => {
+  fetch(`${baseUrl}/comments.json`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',

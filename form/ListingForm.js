@@ -8,12 +8,14 @@ import PropTypes from 'prop-types';
 import { Form } from 'react-bootstrap';
 import { useAuth } from '../utils/context/authContext';
 import { createListing, getListings, updateListing } from '../api/listingData';
+import { getWatchGroups } from '../api/watchGroupData';
 
 const initialState = {
   posterUrl: '',
   title: '',
   description: '',
   mediaType: '',
+  groupId: '',
 };
 
 function ListingForm({ obj = initialState }) {
@@ -24,6 +26,18 @@ function ListingForm({ obj = initialState }) {
   useEffect(() => {
     getListings(user.uid).then();
     if (obj.firebaseKey) setFormInput(obj);
+
+    getWatchGroups(user.uid).then((groups) => {
+      const matchingGroup = groups.find((group) => group.userUids.includes(user.uid));
+      if (matchingGroup) {
+        setFormInput((prevState) => ({
+          ...prevState,
+          groupId: matchingGroup.firebaseKey,
+        }));
+      }
+    }).catch((error) => {
+      console.error('Error getting watch groups: ', error);
+    });
   }, [obj, user]);
 
   const handleInputChange = (e) => {

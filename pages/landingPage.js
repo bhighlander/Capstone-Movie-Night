@@ -4,7 +4,7 @@ import {
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { createWatchGroup, getWatchGroup, updateWatchGroup } from '../api/watchGroupData';
+import { createWatchGroup, getWatchGroups, updateWatchGroup } from '../api/watchGroupData';
 import { useAuth } from '../utils/context/authContext';
 
 function LandingPage() {
@@ -14,7 +14,7 @@ function LandingPage() {
   const { user } = useAuth();
 
   useEffect(() => {
-    getWatchGroup().then(setWatchGroups);
+    getWatchGroups().then(setWatchGroups);
   }, []);
 
   const handleChange = (e) => {
@@ -59,7 +59,7 @@ function LandingPage() {
         <Select value={selectedWatchGroupId} onChange={handleChange}>
           {
   watchGroups.map((group) => {
-    console.log(group); // to check the structure of group object
+    console.warn(group);
     return <MenuItem key={group.firebaseKey} value={group.firebaseKey}>{group.userNames}</MenuItem>;
   })
 }
