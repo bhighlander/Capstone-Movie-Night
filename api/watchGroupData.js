@@ -46,24 +46,6 @@ const updateWatchGroup = (payload) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
-const getGroupListings = (groupId) => new Promise((resolve, reject) => {
-  fetch(`${baseUrl}/listings.json?orderBy="groupId"&equalTo="${groupId}"`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data) {
-        resolve(Object.values(data));
-      } else {
-        resolve([]);
-      }
-    })
-    .catch((error) => reject(error));
-});
-
 export {
-  getWatchGroups, createWatchGroup, updateWatchGroup, getGroupListings,
+  getWatchGroups, createWatchGroup, updateWatchGroup,
 };
