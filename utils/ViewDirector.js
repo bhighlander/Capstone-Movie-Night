@@ -12,7 +12,7 @@ const ViewDirectorBasedOnUserAuthStatus = ({ component: Component, pageProps }) 
     return <Loading />;
   }
 
-  if (user === 'No Group') {
+  if (user && 'No Group') {
     return <LandingPage userObj={user} />;
   }
 
