@@ -82,6 +82,24 @@ const deleteSingleListing = (firebaseKey) => new Promise((resolve, reject) => {
     .catch(reject);
 });
 
+const getUserListings = (uid) => new Promise((resolve, reject) => {
+  fetch(`${baseUrl}/listings.json?orderBy="uid"&equalTo="${uid}"`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data) {
+        resolve(Object.values(data));
+      } else {
+        resolve([]);
+      }
+    })
+    .catch(reject);
+});
+
 export {
-  getListings, createListing, updateListing, getSingleListing, getListingComments, deleteSingleListing,
+  getListings, createListing, updateListing, getSingleListing, getListingComments, deleteSingleListing, getUserListings,
 };

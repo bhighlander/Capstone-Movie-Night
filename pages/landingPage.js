@@ -9,7 +9,7 @@ import { useAuth } from '../utils/context/authContext';
 
 function LandingPage() {
   const [watchGroups, setWatchGroups] = useState([]);
-  const [selectedWatchGroupId, setSelectedWatchGroupId] = useState(null);
+  const [selectedWatchGroupId, setSelectedWatchGroupId] = useState('');
   const router = useRouter();
   const { user } = useAuth();
 
@@ -23,7 +23,7 @@ function LandingPage() {
 
   const handleJoinGroup = (e) => {
     e.preventDefault();
-    if (selectedWatchGroupId) {
+    if (user && selectedWatchGroupId) {
       const selectedGroup = watchGroups.find((group) => group.firebaseKey === selectedWatchGroupId);
       if (selectedGroup) {
         const updatedGroup = {
@@ -41,14 +41,16 @@ function LandingPage() {
 
   const handleCreateGroup = (e) => {
     e.preventDefault();
-    const payload = { userUids: [user.uid], userNames: [user.displayName] };
-    createWatchGroup(payload).then(({ name }) => {
-      const patchPayload = { firebaseKey: name };
-      updateWatchGroup(patchPayload).then(() => {
-        router.push('/');
-        console.warn('Watch Group Created');
+    if (user) {
+      const payload = { userUids: [user.uid], userNames: [user.displayName] };
+      createWatchGroup(payload).then(({ name }) => {
+        const patchPayload = { firebaseKey: name };
+        updateWatchGroup(patchPayload).then(() => {
+          router.push('/');
+          console.warn('Watch Group Created');
+        });
       });
-    });
+    }
   };
 
   return (

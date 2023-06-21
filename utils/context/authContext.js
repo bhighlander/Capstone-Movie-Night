@@ -8,6 +8,7 @@ import React, {
   useState,
 } from 'react';
 import { firebase } from '../client';
+import { getWatchGroups } from '../../api/watchGroupData';
 
 const AuthContext = createContext();
 
@@ -20,6 +21,16 @@ const AuthProvider = (props) => {
     firebase.auth().onAuthStateChanged((fbUser) => {
       if (fbUser) {
         setUser(fbUser);
+        getWatchGroups()
+          .then((watchGroups) => {
+            const isUserInGroups = watchGroups.some((group) => group.userUids.includes(fbUser.uid));
+
+            if (isUserInGroups) {
+              setUser(fbUser);
+            } else {
+              setUser(fbUser, 'No Group');
+            }
+          });
       } else {
         setUser(false);
       }

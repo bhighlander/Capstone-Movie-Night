@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import User from '../components/User';
-import { getListings } from '../api/listingData';
+import { getUserListings } from '../api/listingData';
 import ListingCard from '../components/ListingCard';
 import { useAuth } from '../utils/context/authContext';
 
@@ -9,7 +9,7 @@ function Profile() {
   const { user } = useAuth();
 
   const getAllListings = () => {
-    getListings(user.uid).then(setListings);
+    getUserListings(user.uid).then(setListings);
   };
 
   useEffect(() => {
