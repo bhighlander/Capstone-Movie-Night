@@ -7,7 +7,7 @@ import { useAuth } from '../utils/context/authContext';
 function Profile() {
   const [listings, setListings] = useState([]);
   const { user } = useAuth();
-
+  console.log(user, 'profile user');
   const getAllListings = () => {
     getUserListings(user.uid).then(setListings);
   };

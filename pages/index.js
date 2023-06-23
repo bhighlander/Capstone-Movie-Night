@@ -7,7 +7,6 @@ import { getWatchGroups } from '../api/watchGroupData';
 function Home() {
   const [listings, setListings] = useState([]);
   const { user } = useAuth();
-
   const getAllListings = () => {
     getListings(user.uid)
       .then((listing) => {

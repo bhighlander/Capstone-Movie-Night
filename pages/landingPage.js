@@ -60,10 +60,7 @@ function LandingPage() {
         <InputLabel id="watch-group-select">Select Watch Group</InputLabel>
         <Select value={selectedWatchGroupId} onChange={handleChange}>
           {
-  watchGroups.map((group) => {
-    console.warn(group);
-    return <MenuItem key={group.firebaseKey} value={group.firebaseKey}>{group.userNames}</MenuItem>;
-  })
+  watchGroups.map((group) => <MenuItem key={group.firebaseKey} value={group.firebaseKey}>{group.userNames}</MenuItem>)
 }
 
         </Select>

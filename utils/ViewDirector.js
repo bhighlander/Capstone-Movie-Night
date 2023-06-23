@@ -6,27 +6,27 @@ import NavBarAuth from '../components/NavBarAuth';
 import LandingPage from '../pages/landingPage';
 
 const ViewDirectorBasedOnUserAuthStatus = ({ component: Component, pageProps }) => {
-  const { user, userLoading } = useAuth();
+  const { user, userLoading, userInGroup } = useAuth();
 
-  if (userLoading) {
+  if (userLoading && userInGroup === false) {
     return <Loading />;
   }
+  console.log(userInGroup, 'isUserInGroups', user, 'user');
 
-  if (user && 'No Group') {
-    return <LandingPage userObj={user} />;
+  if (user && userInGroup === false) {
+    return <LandingPage user={user} />;
   }
-
-  if (user) {
+  if (user && userInGroup !== false) {
+  // if (user) {
     return (
       <>
-        <NavBarAuth />
+        <NavBarAuth user={user} />
         <div className="container">
           <Component {...pageProps} />
         </div>
       </>
     );
   }
-
   return <Signin />;
 };
 
@@ -34,5 +34,6 @@ export default ViewDirectorBasedOnUserAuthStatus;
 
 ViewDirectorBasedOnUserAuthStatus.propTypes = {
   component: PropTypes.func.isRequired,
-  pageProps: PropTypes.oneOfType([PropTypes.object]).isRequired,
+  pageProps: PropTypes.func.isRequired,
+  isUserInGroups: PropTypes.bool.isRequired,
 };
