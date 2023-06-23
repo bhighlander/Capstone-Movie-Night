@@ -6,7 +6,7 @@ import {
 import CommentForm from '../form/CommentForm';
 import { deleteComment } from '../api/commentsData';
 
-function CommentField({ commentObj, onUpdate }) {
+function CommentField({ commentObj, onUpdate, setCommentsUpdated }) {
   const [isEditing, setIsEditing] = useState(false);
 
   const handleEdit = () => {
@@ -15,7 +15,10 @@ function CommentField({ commentObj, onUpdate }) {
 
   const handleDelete = () => {
     if (window.confirm('Are you sure you want to delete this comment?')) {
-      deleteComment(commentObj.firebaseKey).then(() => onUpdate());
+      deleteComment(commentObj.firebaseKey).then(() => {
+        onUpdate();
+        setCommentsUpdated(true);
+      });
     }
   };
 
@@ -30,6 +33,7 @@ function CommentField({ commentObj, onUpdate }) {
           obj={commentObj}
           onUpdate={onUpdate}
           onCancel={handleCancel}
+          setCommentsUpdated={setCommentsUpdated}
         />
       ) : (
         <Card className="mt-3">
@@ -56,8 +60,12 @@ CommentField.propTypes = {
     firebaseKey: PropTypes.string,
   }).isRequired,
   onUpdate: PropTypes.func,
+  setCommentsUpdated: PropTypes.func,
 };
 
-CommentField.defaultProps = { onUpdate: () => {} };
+CommentField.defaultProps = {
+  onUpdate: () => {},
+  setCommentsUpdated: () => {},
+};
 
 export default CommentField;

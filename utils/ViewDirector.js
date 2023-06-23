@@ -11,7 +11,6 @@ const ViewDirectorBasedOnUserAuthStatus = ({ component: Component, pageProps }) 
   if (userLoading && userInGroup === false) {
     return <Loading />;
   }
-  console.log(userInGroup, 'isUserInGroups', user, 'user');
 
   if (user && userInGroup === false) {
     return <LandingPage user={user} />;
@@ -34,6 +33,10 @@ export default ViewDirectorBasedOnUserAuthStatus;
 
 ViewDirectorBasedOnUserAuthStatus.propTypes = {
   component: PropTypes.func.isRequired,
-  pageProps: PropTypes.func.isRequired,
-  isUserInGroups: PropTypes.bool.isRequired,
+  pageProps: PropTypes.oneOfType([PropTypes.object]).isRequired,
+  isUserInGroups: PropTypes.bool,
+};
+
+ViewDirectorBasedOnUserAuthStatus.defaultProps = {
+  isUserInGroups: false,
 };

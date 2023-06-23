@@ -32,8 +32,8 @@ function LandingPage() {
           userUids: [...selectedGroup.userUids, user.uid],
         };
         updateWatchGroup(updatedGroup).then(() => {
-          router.push('/');
           console.warn('Watch Group Updated');
+          router.push('/');
         });
       }
     }
@@ -46,8 +46,8 @@ function LandingPage() {
       createWatchGroup(payload).then(({ name }) => {
         const patchPayload = { firebaseKey: name };
         updateWatchGroup(patchPayload).then(() => {
-          router.push('/');
           console.warn('Watch Group Created');
+          router.push('/');
         });
       });
     }
