@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import {
-  FormControl, FormControlLabel, FormLabel, Radio, TextField, RadioGroup,
+  FormControl, FormControlLabel, FormLabel, Radio, TextField, RadioGroup, Button,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 // import { Button, FloatingLabel, Form } from 'react-bootstrap';
@@ -125,7 +125,7 @@ function ListingForm({ obj = initialState }) {
             />
           </RadioGroup>
         </FormControl>
-        <button type="submit">Submit</button>
+        <Button variant="contained" type="submit">Create Listing</Button>
       </Form>
     </>
   );
