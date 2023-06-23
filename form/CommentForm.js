@@ -5,7 +5,9 @@ import PropTypes from 'prop-types';
 import { useAuth } from '../utils/context/authContext';
 import { createComment, updateComment } from '../api/commentsData';
 
-function CommentForm({ obj, listingFirebaseKey }) {
+function CommentForm({
+  obj, listingFirebaseKey, setCommentsUpdated, onCancel,
+}) {
   const [newComment, setNewComment] = useState('');
   const { user } = useAuth();
   const currentDate = new Date().toISOString();
@@ -30,13 +32,18 @@ function CommentForm({ obj, listingFirebaseKey }) {
     e.preventDefault();
     if (obj.firebaseKey) {
       updateComment({ ...formInput })
-        .then(() => setNewComment(''));
+        .then(() => {
+          setNewComment('');
+          setCommentsUpdated(true);
+          onCancel();
+        });
     } else {
       const payload = { ...formInput };
       createComment(payload).then(({ name }) => {
         const patchPayload = { firebaseKey: name };
         updateComment(patchPayload).then(() => {
           setNewComment('');
+          setCommentsUpdated(true);
         });
       });
     }
@@ -57,6 +64,7 @@ function CommentForm({ obj, listingFirebaseKey }) {
         />
       </FormControl>
       <Button variant="contained" onClick={handleSubmit}>Add Comment</Button>
+      <Button variant="contained" onClick={onCancel}>Cancel</Button>
     </Form>
   );
 }
@@ -66,6 +74,13 @@ CommentForm.propTypes = {
     firebaseKey: PropTypes.string,
   }).isRequired,
   listingFirebaseKey: PropTypes.string.isRequired,
+  setCommentsUpdated: PropTypes.func,
+  onCancel: PropTypes.func,
+};
+
+CommentForm.defaultProps = {
+  setCommentsUpdated: () => {},
+  onCancel: () => {},
 };
 
 export default CommentForm;
