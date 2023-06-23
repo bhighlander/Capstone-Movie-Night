@@ -14,7 +14,17 @@ function LandingPage() {
   const { user } = useAuth();
 
   useEffect(() => {
-    getWatchGroups().then(setWatchGroups);
+    let isMounted = true;
+
+    getWatchGroups().then((groups) => {
+      if (isMounted) {
+        setWatchGroups(groups);
+      }
+    });
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const handleChange = (e) => {
@@ -59,10 +69,9 @@ function LandingPage() {
       <FormControl fullWidth>
         <InputLabel id="watch-group-select">Select Watch Group</InputLabel>
         <Select value={selectedWatchGroupId} onChange={handleChange}>
-          {
-  watchGroups.map((group) => <MenuItem key={group.firebaseKey} value={group.firebaseKey}>{group.userNames}</MenuItem>)
-}
-
+          {watchGroups.map((group) => (
+            <MenuItem key={group.firebaseKey} value={group.firebaseKey}>{group.userNames}</MenuItem>
+          ))}
         </Select>
         <Button type="submit" onClick={handleJoinGroup}>Join Watch Group</Button>
         <Button type="submit" onClick={handleCreateGroup}>Create Watch Group</Button>
