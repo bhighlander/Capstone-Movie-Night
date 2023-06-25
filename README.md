@@ -19,10 +19,10 @@ Movie Night is an app to keep track of the shows and movies you're watching with
 - [Wireframes](https://www.figma.com/file/2AV8KzOsaJlF1D4gE3IMtb/Movie-Night?type=design&node-id=0-1&t=A68HIDuv99lJW267-0)
 
 ## Project Screenshots
-<img width="1080 alt="Home" src="https://raw.githubusercontent.com/bhighlander/Capstone-Movie-Night/main/screenshots/home.jpg">
-<img width="1080 alt="Listing" src="https://raw.githubusercontent.com/bhighlander/Capstone-Movie-Night/main/screenshots/listing.jpg">
-<img width="1080 alt="New Listing Form" src="https://raw.githubusercontent.com/bhighlander/Capstone-Movie-Night/main/screenshots/new.jpg">
-<img width="1080 alt="Profile" src="https://raw.githubusercontent.com/bhighlander/Capstone-Movie-Night/main/screenshots/profile.jpg">
+![Home Page](./screenshots/home.jpg)
+![Listing Page](./screenshots/listing.jpg)
+![New Listing Form](./screenshots/new.jpg)
+![Profile Page](./screenshots/profile.jpg)
 
 ## Contributors
 - [Brandon Highland](https://github.com/users/bhighlander)
