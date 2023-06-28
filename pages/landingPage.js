@@ -25,7 +25,7 @@ function LandingPage() {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [watchGroups]);
 
   const handleChange = (e) => {
     setSelectedWatchGroupId(e.target.value);
@@ -43,7 +43,7 @@ function LandingPage() {
         };
         updateWatchGroup(updatedGroup).then(() => {
           console.warn('Watch Group Updated');
-          router.push('/');
+          router.reload();
         });
       }
     }
@@ -57,7 +57,7 @@ function LandingPage() {
         const patchPayload = { firebaseKey: name };
         updateWatchGroup(patchPayload).then(() => {
           console.warn('Watch Group Created');
-          router.push('/');
+          router.reload();
         });
       });
     }
@@ -73,8 +73,8 @@ function LandingPage() {
             <MenuItem key={group.firebaseKey} value={group.firebaseKey}>{group.userNames}</MenuItem>
           ))}
         </Select>
-        <Button type="submit" onClick={handleJoinGroup}>Join Watch Group</Button>
-        <Button type="submit" onClick={handleCreateGroup}>Create Watch Group</Button>
+        <Button type="button" onClick={handleJoinGroup}>Join Watch Group</Button>
+        <Button type="button" onClick={handleCreateGroup}>Create Watch Group</Button>
       </FormControl>
     </Box>
   );
