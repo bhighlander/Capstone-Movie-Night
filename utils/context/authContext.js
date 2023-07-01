@@ -8,7 +8,7 @@ import React, {
   useState,
 } from 'react';
 import { firebase } from '../client';
-import { getWatchGroups } from '../../api/watchGroupData';
+import { checkIfUserInGroups } from '../../api/mergedData';
 
 const AuthContext = createContext();
 
@@ -19,10 +19,9 @@ const AuthProvider = (props) => {
   const [userInGroup, setUserInGroup] = useState(false);
 
   useEffect(() => {
-    const checkUserInGroups = async (fbUser) => {
-      try {
-        const watchGroups = await getWatchGroups();
-        const isUserInGroups = watchGroups.some((group) => group.userUids.includes(fbUser.uid));
+    firebase.auth().onAuthStateChanged(async (fbUser) => {
+      if (fbUser) {
+        const { isUserInGroups } = await checkIfUserInGroups(fbUser.uid);
         if (isUserInGroups) {
           setUser(fbUser);
           setUserInGroup(true);
@@ -32,15 +31,6 @@ const AuthProvider = (props) => {
           setUserInGroup(false);
           console.warn('User not in group');
         }
-      } catch (error) {
-        console.error('Error getting watch groups:', error);
-        setUser(false);
-      }
-    };
-
-    firebase.auth().onAuthStateChanged(async (fbUser) => {
-      if (fbUser) {
-        await checkUserInGroups(fbUser);
       } else {
         setUser(false);
         console.warn('No user');
