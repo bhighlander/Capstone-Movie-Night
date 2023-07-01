@@ -125,7 +125,7 @@ function ListingForm({ obj = initialState }) {
             />
           </RadioGroup>
         </FormControl>
-        <Button variant="contained" type="submit">Create Listing</Button>
+        <Button variant="contained" type="submit">{obj.firebaseKey ? 'Update' : 'Create'} Listing</Button>
       </Form>
     </>
   );

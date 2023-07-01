@@ -1,5 +1,6 @@
 import { deleteComment } from './commentsData';
 import { deleteSingleListing, getListingComments, getSingleListing } from './listingData';
+import { getWatchGroups } from './watchGroupData';
 
 const viewListingDetails = (listingFirebaseKey) => new Promise((resolve, reject) => {
   Promise.all([getSingleListing(listingFirebaseKey), getListingComments(listingFirebaseKey)])
@@ -19,4 +20,15 @@ const deleteListingComments = (listingId) => new Promise((resolve, reject) => {
   }).catch((error) => reject(error));
 });
 
-export { viewListingDetails, deleteListingComments };
+const checkIfUserInGroups = async (uid) => {
+  try {
+    const watchGroups = await getWatchGroups();
+    const isUserInGroups = watchGroups.some((group) => group.userUids.includes(uid));
+    return { isUserInGroups };
+  } catch (error) {
+    console.error('Error getting watch groups:', error);
+    return { isUserInGroups: false };
+  }
+};
+
+export { viewListingDetails, deleteListingComments, checkIfUserInGroups };
