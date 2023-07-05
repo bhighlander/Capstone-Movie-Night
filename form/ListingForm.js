@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import {
-  FormControl, FormControlLabel, FormLabel, Radio, TextField, RadioGroup, Button,
+  FormControl, FormControlLabel, FormLabel, Radio, TextField, RadioGroup, Button, Autocomplete,
 } from '@mui/material';
 import PropTypes from 'prop-types';
-// import { Button, FloatingLabel, Form } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
 import { useAuth } from '../utils/context/authContext';
 import { createListing, getListings, updateListing } from '../api/listingData';
 import { getWatchGroups } from '../api/watchGroupData';
+import apiSearch from '../api/searchData';
+import useDebounce from '../hooks/useDebounce';
 
 const initialState = {
   posterUrl: '',
@@ -20,8 +21,12 @@ const initialState = {
 
 function ListingForm({ obj = initialState }) {
   const [formInput, setFormInput] = useState(obj);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
   const router = useRouter();
   const { user } = useAuth();
+
+  const debouncedSearch = useDebounce(searchQuery, 1000);
 
   useEffect(() => {
     getListings(user.uid).then();
@@ -48,6 +53,20 @@ function ListingForm({ obj = initialState }) {
     }));
   };
 
+  useEffect(() => {
+    const search = async () => {
+      if (searchQuery.length > 0) {
+        const { results } = await apiSearch(debouncedSearch);
+        setSearchResults(results);
+        console.log(results);
+      } else {
+        setSearchResults([]);
+      }
+    };
+
+    search();
+  }, [debouncedSearch]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (obj.firebaseKey) {
@@ -66,6 +85,39 @@ function ListingForm({ obj = initialState }) {
 
   return (
     <>
+      <Autocomplete
+        freeSolo
+        id="search"
+        disableClearable
+        options={searchResults?.map((option) => option.title || option.name)}
+        onInputChange={(event, newInputValue) => {
+          setSearchQuery(newInputValue);
+        }}
+        onChange={(event, value) => {
+          const selectedMedia = searchResults.find((media) => media.title === value || media.name === value);
+
+          if (selectedMedia) {
+            setFormInput({
+              ...formInput,
+              posterUrl: `https://image.tmdb.org/t/p/original${selectedMedia.poster_path}`,
+              title: selectedMedia.title || selectedMedia.name,
+              description: selectedMedia.overview,
+              mediaType: selectedMedia.media_type === 'movie' ? 'movie' : 'show',
+            });
+          }
+        }}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Search"
+            InputProps={{
+              ...params.InputProps,
+              type: 'search',
+            }}
+          />
+        )}
+      />
+      <br />
       <Form onSubmit={handleSubmit}>
         <h2 className="form-title">{obj.firebaseKey ? 'Update' : 'Create'} Listing</h2>
         <FormControl>
@@ -106,7 +158,7 @@ function ListingForm({ obj = initialState }) {
           <FormLabel id="mediaType">Type</FormLabel>
           <RadioGroup
             aria-labelledby="mediaType"
-            defaultValue="show"
+            defaultValue={formInput.mediaType}
             name="mediaType"
             row
             value={formInput.mediaType}
@@ -114,12 +166,12 @@ function ListingForm({ obj = initialState }) {
             required
           >
             <FormControlLabel
-              value="Show"
+              value="show"
               control={<Radio />}
               label="TV Show"
             />
             <FormControlLabel
-              value="Movie"
+              value="movie"
               control={<Radio />}
               label="Movie"
             />

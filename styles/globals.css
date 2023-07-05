@@ -20,3 +20,8 @@ a {
 body {
   background-color: #88effd;
 }
+
+.listing-card-description {
+  max-height: 5.2em;
+  overflow: hidden;
+}
