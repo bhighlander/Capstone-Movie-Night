@@ -1,5 +1,5 @@
 import { Button, FormControl, TextField } from '@mui/material';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import { useAuth } from '../utils/context/authContext';
@@ -17,7 +17,9 @@ function CommentForm({
     listingId: listingFirebaseKey,
     date: currentDate,
     firebaseKey: obj.firebaseKey,
+    creator: user.displayName,
   });
+  const [showCommentField, setShowCommentField] = useState(false);
 
   const handleCommentChange = (e) => {
     const { name, value } = e.target;
@@ -36,6 +38,7 @@ function CommentForm({
           setNewComment('');
           setCommentsUpdated(true);
           onCancel();
+          setShowCommentField(false);
         });
     } else {
       const payload = { ...formInput };
@@ -44,28 +47,57 @@ function CommentForm({
         updateComment(patchPayload).then(() => {
           setNewComment('');
           setCommentsUpdated(true);
+          setShowCommentField(false);
         });
       });
     }
   };
 
+  const handleNewComment = () => {
+    setShowCommentField(true);
+  };
+
+  useEffect(() => {
+    if (obj.firebaseKey) {
+      setShowCommentField(true);
+    }
+  }, [obj.firebaseKey]);
+
   return (
-    <Form onSubmit={handleSubmit}>
-      <FormControl>
-        <TextField
-          label="Add a comment"
-          name="commentText"
-          multiline
-          rows={4}
-          value={newComment}
-          onChange={handleCommentChange}
-          variant="outlined"
-          style={{ margin: '10px' }}
-        />
-      </FormControl>
-      <Button variant="contained" onClick={handleSubmit}>Add Comment</Button>
-      <Button variant="contained" onClick={onCancel}>Cancel</Button>
-    </Form>
+    <>
+      {!showCommentField && (
+        <div>
+          <br />
+          <Button variant="contained" color="primary" onClick={handleNewComment}>
+            New Comment
+          </Button>
+        </div>
+      )}
+      {showCommentField && (
+        <Form onSubmit={handleSubmit}>
+          <br />
+          <FormControl>
+            <TextField
+              label="Add a comment"
+              name="commentText"
+              multiline
+              rows={4}
+              value={newComment}
+              onChange={handleCommentChange}
+              required
+            />
+          </FormControl>
+          <Button variant="contained" color="primary" type="submit">
+            {obj.firebaseKey ? 'Save Changes' : 'Add Comment'}
+          </Button>
+          {obj.firebaseKey && (
+            <Button variant="contained" color="secondary" onClick={onCancel}>
+              Cancel
+            </Button>
+          )}
+        </Form>
+      )}
+    </>
   );
 }
 
@@ -73,13 +105,14 @@ CommentForm.propTypes = {
   obj: PropTypes.shape({
     firebaseKey: PropTypes.string,
   }).isRequired,
-  listingFirebaseKey: PropTypes.string.isRequired,
+  listingFirebaseKey: PropTypes.string,
   setCommentsUpdated: PropTypes.func,
   onCancel: PropTypes.func,
 };
 
 CommentForm.defaultProps = {
   setCommentsUpdated: () => {},
+  listingFirebaseKey: '',
   onCancel: () => {},
 };
 

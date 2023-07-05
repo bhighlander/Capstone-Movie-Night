@@ -45,7 +45,7 @@ function ViewListing({ onUpdate }) {
           <Typography variant="h5" component="h1">{listingDetails.title}</Typography>
           <Typography variant="body1" component="p">{listingDetails.description}</Typography>
           <Typography variant="h6" component="h3">{listingDetails.mediaType}</Typography>
-
+          <br />
           <div className="d-flex flex-column">
             {listingDetails.comments && listingDetails.comments.filter((comment) => comment.date).sort((b, a) => a.date.localeCompare(b.date)).map((comment) => (
               <CommentField key={comment.firebaseKey} commentObj={comment} setCommentsUpdated={setCommentsUpdated} />
