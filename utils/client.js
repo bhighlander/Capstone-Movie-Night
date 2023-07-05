@@ -12,8 +12,14 @@ const clientCredentials = {
   databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
 };
 
+const searchCredentials = {
+  apiKey: process.env.NEXT_PUBLIC_SEARCH_API_KEY,
+  searchUrl: 'https://api.themoviedb.org/3/search/multi?query=',
+  apiReadToken: process.env.NEXT_PUBLIC_SEARCH_API_READ_TOKEN,
+};
+
 if (!firebase.apps.length) {
   firebase?.initializeApp(clientCredentials);
 }
 
-export { firebase, clientCredentials };
+export { firebase, clientCredentials, searchCredentials };

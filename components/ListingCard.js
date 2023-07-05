@@ -14,7 +14,7 @@ function ListingCard({ listingObj }) {
       <CardMedia sx={{ height: '400px' }} image={listingObj.posterUrl} />
       <CardContent>
         <Typography>{listingObj.title}</Typography>
-        <Typography>{listingObj.description}</Typography>
+        <Typography className="listing-card-description">{listingObj.description}</Typography>
         <Typography>{listingObj.mediaType}</Typography>
       </CardContent>
       <CardActions>
