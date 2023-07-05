@@ -20,7 +20,7 @@ const initialState = {
 };
 
 function ListingForm({ obj = initialState }) {
-  const [formInput, setFormInput] = useState(obj);
+  const [formInput, setFormInput] = useState({ ...initialState, ...obj });
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const router = useRouter();
@@ -58,7 +58,6 @@ function ListingForm({ obj = initialState }) {
       if (searchQuery.length > 0) {
         const { results } = await apiSearch(debouncedSearch);
         setSearchResults(results);
-        console.log(results);
       } else {
         setSearchResults([]);
       }
@@ -102,7 +101,7 @@ function ListingForm({ obj = initialState }) {
               posterUrl: `https://image.tmdb.org/t/p/original${selectedMedia.poster_path}`,
               title: selectedMedia.title || selectedMedia.name,
               description: selectedMedia.overview,
-              mediaType: selectedMedia.media_type === 'movie' ? 'movie' : 'show',
+              mediaType: selectedMedia.media_type === 'movie' ? 'Movie' : 'Show',
             });
           }
         }}
@@ -129,6 +128,7 @@ function ListingForm({ obj = initialState }) {
             variant="outlined"
             onChange={handleInputChange}
             required
+            InputLabelProps={{ shrink: true }}
           />
         </FormControl>
         <FormControl>
@@ -140,6 +140,7 @@ function ListingForm({ obj = initialState }) {
             variant="outlined"
             onChange={handleInputChange}
             required
+            InputLabelProps={{ shrink: true }}
           />
         </FormControl>
         <FormControl>
@@ -151,6 +152,7 @@ function ListingForm({ obj = initialState }) {
             variant="outlined"
             onChange={handleInputChange}
             required
+            InputLabelProps={{ shrink: true }}
           />
 
         </FormControl>
@@ -165,12 +167,12 @@ function ListingForm({ obj = initialState }) {
             required
           >
             <FormControlLabel
-              value="show"
+              value="Show"
               control={<Radio />}
               label="TV Show"
             />
             <FormControlLabel
-              value="movie"
+              value="Movie"
               control={<Radio />}
               label="Movie"
             />
