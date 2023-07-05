@@ -158,7 +158,6 @@ function ListingForm({ obj = initialState }) {
           <FormLabel id="mediaType">Type</FormLabel>
           <RadioGroup
             aria-labelledby="mediaType"
-            defaultValue={formInput.mediaType}
             name="mediaType"
             row
             value={formInput.mediaType}
