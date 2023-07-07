@@ -15,7 +15,7 @@ Movie Night is an app to keep track of the shows and movies you're watching with
 - Users can view a list of all the shows and movies they've added to their watch group on their profile page
 
 ## Relevant Links
-- Deployed site
+- [Deployed site](https://capstone-movie-night.vercel.app/)
 - [Wireframes](https://www.figma.com/file/2AV8KzOsaJlF1D4gE3IMtb/Movie-Night?type=design&node-id=0-1&t=A68HIDuv99lJW267-0)
 
 ## Project Screenshots
