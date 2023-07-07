@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
+import Image from 'next/image';
 import { signIn } from '../utils/auth';
 
 function Signin() {
@@ -7,14 +8,14 @@ function Signin() {
     <div
       className="text-center d-flex flex-column justify-content-center align-content-center"
       style={{
-        height: '90vh',
+        height: '70vh',
         padding: '30px',
         maxWidth: '400px',
         margin: '0 auto',
       }}
     >
-      <h1>Hi there!</h1>
-      <p>Click the button below to login!</p>
+      <Image src="/img/movienightlogo.jpeg" alt="logo" width="200" height="300" />
+      <h1>Hello there!</h1>
       <Button type="button" size="lg" className="copy-btn" onClick={signIn}>
         Sign In
       </Button>

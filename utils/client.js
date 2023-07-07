@@ -15,7 +15,7 @@ const clientCredentials = {
 const searchCredentials = {
   apiKey: process.env.NEXT_PUBLIC_SEARCH_API_KEY,
   searchUrl: 'https://api.themoviedb.org/3/search/multi?query=',
-  apiReadToken: process.env.NEXT_PUBLIC_SEARCH_API_READ_TOKEN,
+  apiReadToken: process.env.NEXT_PUBLIC_SEARCH_READ_TOKEN,
 };
 
 if (!firebase.apps.length) {

@@ -64,19 +64,30 @@ function LandingPage() {
   };
 
   return (
-    <Box sx={{ minWidth: 120 }}>
-      <h1>Watch Group</h1>
-      <FormControl fullWidth>
-        <InputLabel id="watch-group-select">Select Watch Group</InputLabel>
-        <Select value={selectedWatchGroupId} onChange={handleChange}>
-          {watchGroups.map((group) => (
-            <MenuItem key={group.firebaseKey} value={group.firebaseKey}>{group.userNames}</MenuItem>
-          ))}
-        </Select>
-        <Button type="button" onClick={handleJoinGroup}>Join Watch Group</Button>
-        <Button type="button" onClick={handleCreateGroup}>Create Watch Group</Button>
-      </FormControl>
-    </Box>
+    <div
+      className="text-center d-flex flex-column justify-content-center align-content-center"
+      style={{
+        height: '50vh',
+        padding: '20px',
+        maxWidth: '500px',
+        margin: '0 auto',
+      }}
+    >
+      <Box sx={{ minWidth: 120 }}>
+        <h1>Watch Group</h1>
+        <p>Join or create a watch group to get started!</p>
+        <FormControl fullWidth>
+          <InputLabel id="watch-group-select">Select Watch Group</InputLabel>
+          <Select value={selectedWatchGroupId} onChange={handleChange}>
+            {watchGroups.map((group) => (
+              <MenuItem key={group.firebaseKey} value={group.firebaseKey}>{group.userNames}</MenuItem>
+            ))}
+          </Select>
+          <Button type="button" onClick={handleJoinGroup}>Join Watch Group</Button>
+          <Button type="button" onClick={handleCreateGroup}>Create Watch Group</Button>
+        </FormControl>
+      </Box>
+    </div>
   );
 }
 

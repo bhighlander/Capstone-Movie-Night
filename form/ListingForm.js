@@ -83,7 +83,15 @@ function ListingForm({ obj = initialState }) {
   };
 
   return (
-    <>
+    <div
+      className="text-center d-flex flex-column justify-content-center align-content-center"
+      style={{
+        height: '50vh',
+        padding: '20px',
+        maxWidth: '900px',
+        margin: '0 auto',
+      }}
+    >
       <Autocomplete
         freeSolo
         id="search"
@@ -156,6 +164,7 @@ function ListingForm({ obj = initialState }) {
           />
 
         </FormControl>
+        <br />
         <FormControl>
           <FormLabel id="mediaType">Type</FormLabel>
           <RadioGroup
@@ -178,9 +187,10 @@ function ListingForm({ obj = initialState }) {
             />
           </RadioGroup>
         </FormControl>
+        <br />
         <Button variant="contained" type="submit">{obj.firebaseKey ? 'Update' : 'Create'} Listing</Button>
       </Form>
-    </>
+    </div>
   );
 }
 
