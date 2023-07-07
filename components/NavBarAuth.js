@@ -4,6 +4,7 @@ import { BottomNavigation, BottomNavigationAction } from '@mui/material';
 import {
   Home, Person, AddCircle, ExitToApp,
 } from '@mui/icons-material';
+import Image from 'next/image';
 import { signOut } from '../utils/auth';
 
 export default function NavBarAuth() {
@@ -13,6 +14,7 @@ export default function NavBarAuth() {
 
   return (
     <BottomNavigation showLabels>
+      <Image src="/img/mnnav.png" alt="logo" width="55" height="100" />
       <Link passHref href="/">
         <BottomNavigationAction label="Home" icon={<Home />} />
       </Link>

@@ -15,6 +15,7 @@ const darkTheme = createTheme({
 function MyApp({ Component, pageProps }) {
   return (
     <>
+      <title>Movie Night</title>
       <ThemeProvider theme={darkTheme}>
         <CssBaseline />
         <AuthProvider>

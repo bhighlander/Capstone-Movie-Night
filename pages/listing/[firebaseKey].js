@@ -17,6 +17,7 @@ function ViewListing({ onUpdate }) {
   const handleDelete = () => {
     if (window.confirm('Are you sure you want to delete this listing?')) {
       deleteListingComments(firebaseKey).then(() => onUpdate());
+      router.push('/');
     }
   };
 
