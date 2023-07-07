@@ -7,8 +7,10 @@ import {
   Card,
   CardActions, CardContent, CardMedia, Link, Typography,
 } from '@mui/material';
+import { useAuth } from '../utils/context/authContext';
 
 function ListingCard({ listingObj }) {
+  const { user } = useAuth();
   return (
     <Card style={{ width: '18rem', margin: '10px' }}>
       <CardMedia sx={{ height: '400px' }} image={listingObj.posterUrl} />
@@ -21,9 +23,11 @@ function ListingCard({ listingObj }) {
         <Link href={`/listing/${listingObj.firebaseKey}`}>
           <Button type="button" href={`/listing/${listingObj.firebaseKey}`}>View</Button>
         </Link>
+        {listingObj.uid === user.uid && (
         <Link href={`listing/edit/${listingObj.firebaseKey}`}>
           <Button type="button" href={`/listing/edit/${listingObj.firebaseKey}`}>Edit</Button>
         </Link>
+        )}
       </CardActions>
     </Card>
   );
@@ -36,6 +40,7 @@ ListingCard.propTypes = {
     description: PropTypes.string,
     mediaType: PropTypes.string,
     posterUrl: PropTypes.string,
+    uid: PropTypes.string,
   }).isRequired,
 };
 

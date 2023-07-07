@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import { deleteListingComments, viewListingDetails } from '../../api/mergedData';
 import CommentForm from '../../form/CommentForm';
 import CommentField from '../../components/CommentField';
+import { useAuth } from '../../utils/context/authContext';
 
 function ViewListing({ onUpdate }) {
   const [listingDetails, setListingDetails] = useState({});
@@ -15,6 +16,7 @@ function ViewListing({ onUpdate }) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const { firebaseKey } = router.query;
+  const { user } = useAuth();
 
   const handleOpen = () => {
     setOpen(true);
@@ -31,7 +33,6 @@ function ViewListing({ onUpdate }) {
     setOpen(false);
   };
 
-  // Updated handleDelete
   const handleDelete = () => {
     handleOpen();
   };
@@ -52,10 +53,14 @@ function ViewListing({ onUpdate }) {
       <Card style={{ width: '18rem', margin: '10px' }}>
         <CardMedia sx={{ height: '400px' }} image={listingDetails.posterUrl} />
         <CardActions>
-          <Link href={`listing/edit/${firebaseKey}`}>
-            <Button type="button" href={`/listing/edit/${firebaseKey}`}>Edit</Button>
-          </Link>
-          <Button type="button" onClick={handleDelete}>Delete</Button>
+          {listingDetails.uid === user.uid && (
+          <>
+            <Link href={`listing/edit/${firebaseKey}`}>
+              <Button type="button" href={`/listing/edit/${firebaseKey}`}>Edit</Button>
+            </Link>
+            <Button type="button" onClick={handleDelete}>Delete</Button>
+          </>
+          )}
         </CardActions>
         <CardContent>
           <Typography variant="h5" component="h1">{listingDetails.title}</Typography>
