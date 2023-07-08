@@ -14,8 +14,9 @@ function Signin() {
         margin: '0 auto',
       }}
     >
+      <h1>Movie Night</h1>
       <Image src="/img/movienightlogo.jpeg" alt="logo" width="200" height="300" />
-      <h1>Hello there!</h1>
+      <h2>Hello there!</h2>
       <Button type="button" size="lg" className="copy-btn" onClick={signIn}>
         Sign In
       </Button>
