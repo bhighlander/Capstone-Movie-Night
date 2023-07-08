@@ -109,7 +109,7 @@ function ListingForm({ obj = initialState }) {
               posterUrl: `https://image.tmdb.org/t/p/original${selectedMedia.poster_path}`,
               title: selectedMedia.title || selectedMedia.name,
               description: selectedMedia.overview,
-              mediaType: selectedMedia.media_type === 'movie' ? 'Movie' : 'Show',
+              mediaType: selectedMedia.media_type === 'movie' ? 'Movie' : 'TV Show',
             });
           }
         }}
