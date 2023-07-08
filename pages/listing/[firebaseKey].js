@@ -43,7 +43,9 @@ function ViewListing({ onUpdate }) {
         </CardActions>
         <CardContent>
           <Typography variant="h5" component="h1">{listingDetails.title}</Typography>
+          <br />
           <Typography variant="body1" component="p">{listingDetails.description}</Typography>
+          <br />
           <Typography variant="h6" component="h3">{listingDetails.mediaType}</Typography>
           <br />
           <div className="d-flex flex-column">

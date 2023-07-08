@@ -167,7 +167,7 @@ function ListingForm({ obj = initialState }) {
             required
           >
             <FormControlLabel
-              value="Show"
+              value="TV Show"
               control={<Radio />}
               label="TV Show"
             />
