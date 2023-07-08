@@ -15,8 +15,10 @@ function ListingCard({ listingObj }) {
     <Card style={{ width: '18rem', margin: '10px' }}>
       <CardMedia sx={{ height: '400px' }} image={listingObj.posterUrl} />
       <CardContent>
-        <Typography>{listingObj.title}</Typography>
-        <Typography className="listing-card-description">{listingObj.description}</Typography>
+        <Typography variant="h6">{listingObj.title}</Typography>
+        <br />
+        <Typography variant="body1" className="listing-card-description">{listingObj.description}</Typography>
+        <br />
         <Typography>{listingObj.mediaType}</Typography>
       </CardContent>
       <CardActions>
